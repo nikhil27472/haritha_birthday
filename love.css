@@ -1,0 +1,766 @@
+body {
+
+    background: #323641;
+
+    margin: 0; /* Add this */
+
+    overflow: hidden; /* Prevent scrollbars during animation */
+
+    transition: background 1s ease-in-out; /* Transition for background change */
+
+}
+
+.letter-image {
+
+    position: absolute;
+
+    top: 50%;
+
+    left: 50%;
+
+    width: 200px;
+
+    height: 200px;
+
+    transform: translate(-50%, -50%);
+
+    cursor: pointer;
+
+    z-index: 10; /* Ensure letter is above initial body bg */
+
+}
+
+.animated-mail {
+
+    position: absolute;
+
+    height: 150px;
+
+    width: 200px;
+
+    transition: transform 0.4s; /* Simplified transition */
+
+}
+
+.animated-mail .body {
+
+    position: absolute;
+
+    bottom: 0;
+
+    width: 0;
+
+    height: 0;
+
+    border-style: solid;
+
+    border-width: 0 0 100px 200px;
+
+    border-color: transparent transparent #e95f55 transparent;
+
+    z-index: 2;
+
+}
+
+.animated-mail .top-fold {
+
+    position: absolute;
+
+    top: 50px;
+
+    width: 0;
+
+    height: 0;
+
+    border-style: solid;
+
+    border-width: 50px 100px 0 100px;
+
+    transform-origin: 50% 0%;
+
+    transition: transform 0.4s 0.4s, z-index 0.2s 0.4s;
+
+    border-color: #cf4a43 transparent transparent transparent;
+
+    z-index: 2;
+
+}
+
+.animated-mail .back-fold {
+
+    position: absolute;
+
+    bottom: 0;
+
+    width: 200px;
+
+    height: 100px;
+
+    background: #cf4a43;
+
+    z-index: 0;
+
+}
+
+.animated-mail .left-fold {
+
+    position: absolute;
+
+    bottom: 0;
+
+    width: 0;
+
+    height: 0;
+
+    border-style: solid;
+
+    border-width: 50px 0 50px 100px;
+
+    border-color: transparent transparent transparent #e15349;
+
+    z-index: 2;
+
+}
+
+.animated-mail .letter {
+
+    left: 20px;
+
+    bottom: 0px;
+
+    position: absolute;
+
+    width: 160px;
+
+    height: 60px;
+
+    background: white;
+
+    z-index: 1;
+
+    overflow: hidden;
+
+    transition: all 0.4s 0.2s; /* Changed to 'all' for height and potential transform */
+
+}
+
+.letter .letter-border {
+
+    height: 10px;
+
+    width: 100%;
+
+    background: repeating-linear-gradient(
+
+        -45deg,
+
+        #cb5a5e,
+
+        #cb5a5e 8px,
+
+        transparent 8px,
+
+        transparent 18px
+
+    );
+
+}
+
+.letter .letter-title {
+
+    margin-top: 10px;
+
+    margin-left: 5px;
+
+    height: 10px;
+
+    width: 40%;
+
+    background: #cb5a5e;
+
+}
+
+.letter .letter-context {
+
+    margin-top: 10px;
+
+    margin-left: 5px;
+
+    height: 10px;
+
+    width: 20%;
+
+    background: #cb5a5e;
+
+}
+
+.letter .letter-stamp {
+
+    margin-top: -25px; /* Adjusted for new layout */
+
+    margin-left: 120px;
+
+    border-radius: 100%;
+
+    height: 30px;
+
+    width: 30px;
+
+    background: #cb5a5e;
+
+    opacity: 0.3;
+
+}
+
+.shadow {
+
+    position: absolute;
+
+    top: 200px;
+
+    left: 50%;
+
+    width: 400px;
+
+    height: 30px;
+
+    transition: all 0.4s; /* Changed to 'all' */
+
+    transform: translateX(-50%);
+
+    border-radius: 100%;
+
+    background: radial-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.0), rgba(0,0,0,0.0));
+
+    z-index: 5; /* Below letter */
+
+}
+
+/* --- States triggered by JavaScript --- */
+
+/* 1. First Click State: Envelope Opened */
+
+.letter-image.opened .animated-mail {
+
+    transform: translateY(50px);
+
+}
+
+.letter-image.opened .animated-mail .top-fold {
+
+    transition: transform 0.4s, z-index 0.2s;
+
+    transform: rotateX(180deg);
+
+    z-index: 0;
+
+}
+
+.letter-image.opened .animated-mail .letter {
+
+    height: 180px; /* Letter comes out */
+
+}
+
+.letter-image.opened .shadow {
+
+    width: 250px;
+
+}
+
+/* 2. Second Click State: Love Revealed */
+
+body.love-revealed {
+
+    /* Fancy background for the reveal */
+
+    background: linear-gradient(45deg, #ff8a8a, #ffcdcd, #f9d7f9, #aed9e0);
+
+    background-size: 400% 400%;
+
+    animation: loveBackground 10s ease infinite;
+
+}
+
+@keyframes loveBackground {
+
+    0% { background-position: 0% 50%; }
+
+    50% { background-position: 100% 50%; }
+
+    100% { background-position: 0% 50%; }
+
+}
+
+body.love-revealed .letter-image {
+
+    /* Make the original letter fade and shrink slightly */
+
+    opacity: 0;
+
+    transform: translate(-50%, -50%) scale(0.8);
+
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+
+    pointer-events: none; /* Disable clicks after reveal */
+
+}
+
+/* Styles for the message overlay */
+
+#love-message-overlay {
+
+    position: fixed;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    background-color: rgba(0, 0, 0, 0.5);
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    z-index: 100;
+
+    transition: opacity 1s ease-in-out 0.3s, visibility 1s step-end 0.3s;
+
+    overflow-y: auto;
+    padding: 20px;
+
+}
+
+body.love-revealed #love-message-overlay {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    transition: opacity 1s ease-in-out 0.3s, visibility 1s step-start 0.3s;
+
+}
+
+.love-message-content {
+
+    position: relative;
+    display: flex;
+    max-width: 900px;
+    width: 90%;
+    min-height: 600px;
+    background: linear-gradient(to bottom, #f9f6f0 0%, #f5f0e8 100%);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    border-radius: 5px;
+    transform: scale(0.5);
+    opacity: 0;
+    animation: popIn 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0.5s forwards;
+    margin: auto;
+
+}
+
+/* Paper texture effect */
+.love-message-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 30px,
+            rgba(200, 200, 200, 0.1) 30px,
+            rgba(200, 200, 200, 0.1) 31px
+        );
+    pointer-events: none;
+    border-radius: 5px;
+}
+
+/* Spiral binding on the left */
+.spiral-binding {
+    width: 40px;
+    background: linear-gradient(to right, #ddd, #eee);
+    border-right: 2px solid #ccc;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 20px 0;
+    border-radius: 5px 0 0 5px;
+    box-shadow: inset -2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.spiral-ring {
+    width: 25px;
+    height: 25px;
+    border: 3px solid #888;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #fff, #ccc);
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3),
+                0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Letter content area */
+.letter-content {
+    flex: 1;
+    padding: 40px 50px;
+    color: #2c3e50;
+    font-family: 'Noto Sans Telugu', 'Poppins', Arial, sans-serif;
+    overflow-y: auto;
+    max-height: 80vh;
+}
+
+.letter-content h1 {
+    font-size: 2.2em;
+    margin-bottom: 10px;
+    color: #c0392b;
+    text-align: center;
+    font-weight: bold;
+    opacity: 0;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.letter-content h2 {
+    font-size: 1.3em;
+    margin-bottom: 30px;
+    color: #7f8c8d;
+    text-align: center;
+    font-style: italic;
+    opacity: 0;
+}
+
+.letter-content p {
+    font-size: 1.15em;
+    line-height: 2;
+    text-align: justify;
+    color: #34495e;
+    margin-bottom: 20px;
+    opacity: 0;
+    white-space: pre-line;
+}
+
+.letter-content h3 {
+    font-size: 2.5em;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    color: #e74c3c;
+    text-align: center;
+    font-weight: bold;
+    opacity: 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+.signature {
+    margin-top: 40px;
+    text-align: right;
+    font-size: 1.4em;
+    font-style: italic;
+    color: #c0392b;
+    font-weight: bold;
+    opacity: 0;
+    white-space: pre-line;
+}
+
+/* Song Lyrics Paragraph */
+#song-lyrics {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, rgba(255, 182, 193, 0.3), rgba(255, 240, 245, 0.3));
+    border-left: 4px solid #ff69b4;
+    border-radius: 10px;
+    font-size: 1.3em;
+    font-style: italic;
+    color: #d63384;
+    text-align: center;
+    opacity: 0;
+    white-space: pre-line;
+    line-height: 1.8;
+    box-shadow: 0 2px 10px rgba(255, 105, 180, 0.2);
+}
+
+@keyframes popIn {
+
+    to {
+
+        transform: scale(1);
+
+        opacity: 1;
+
+    }
+
+}
+
+/* Typewriter cursor effect */
+#typewriter-h1.typing::after,
+#typewriter-p.typing::after,
+#typewriter-h3.typing::after,
+#typewriter-signature.typing::after {
+    content: '|';
+    animation: blink 0.7s infinite;
+    margin-left: 2px;
+}
+
+@keyframes blink {
+    0%, 50% {
+        opacity: 1;
+    }
+    51%, 100% {
+        opacity: 0;
+    }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .love-message-content {
+        width: 95%;
+        min-height: auto;
+        max-height: 90vh;
+    }
+    
+    .spiral-binding {
+        width: 30px;
+    }
+    
+    .spiral-ring {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .letter-content {
+        padding: 25px 20px;
+    }
+    
+    .letter-content h1 {
+        font-size: 1.6em;
+    }
+    
+    .letter-content h2 {
+        font-size: 1.1em;
+    }
+    
+    .letter-content h3 {
+        font-size: 1.8em;
+        margin-top: 20px;
+        margin-bottom: 15px;
+    }
+    
+    .letter-content p {
+        font-size: 1em;
+        line-height: 1.8;
+    }
+    
+    .signature {
+        font-size: 1.2em;
+    }
+}
+
+@keyframes pulse {
+
+    0% { transform: scale(1); }
+
+    50% { transform: scale(1.05); }
+
+    100% { transform: scale(1); }
+
+}
+
+/* Animated Floating Hearts */
+.heart {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: #ff4d6d;
+    opacity: 0;
+    transform: rotate(-45deg);
+    z-index: 50;
+    animation: floatUp 8s infinite linear;
+    pointer-events: none;
+}
+
+.heart::before,
+.heart::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: #ff4d6d;
+    border-radius: 50%;
+}
+
+.heart::before {
+    top: -10px;
+    left: 0;
+}
+
+.heart::after {
+    top: 0;
+    left: 10px;
+}
+
+/* Position and delay hearts */
+body.love-revealed .heart1 { left: 10%; animation-delay: 0s; }
+body.love-revealed .heart2 { left: 25%; animation-delay: 1.5s; }
+body.love-revealed .heart3 { left: 40%; animation-delay: 3s; }
+body.love-revealed .heart4 { left: 55%; animation-delay: 4.5s; }
+body.love-revealed .heart5 { left: 70%; animation-delay: 6s; }
+body.love-revealed .heart6 { left: 85%; animation-delay: 1s; }
+body.love-revealed .heart7 { left: 18%; animation-delay: 2.5s; }
+body.love-revealed .heart8 { left: 62%; animation-delay: 5s; }
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(100vh) rotate(-45deg) scale(0.5);
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(-10vh) rotate(-45deg) scale(1.2);
+        opacity: 0;
+    }
+}
+
+/* Animated Hearts (alternative smaller size) */
+.heart1, .heart3, .heart5, .heart7 {
+    width: 15px;
+    height: 15px;
+}
+
+.heart1::before, .heart1::after,
+.heart3::before, .heart3::after,
+.heart5::before, .heart5::after,
+.heart7::before, .heart7::after {
+    width: 15px;
+    height: 15px;
+}
+
+.heart1::before, .heart3::before, .heart5::before, .heart7::before {
+    top: -7.5px;
+}
+
+.heart1::after, .heart3::after, .heart5::after, .heart7::after {
+    left: 7.5px;
+}
+
+/* Larger hearts */
+.heart2, .heart4, .heart6, .heart8 {
+    width: 25px;
+    height: 25px;
+}
+
+.heart2::before, .heart2::after,
+.heart4::before, .heart4::after,
+.heart6::before, .heart6::after,
+.heart8::before, .heart8::after {
+    width: 25px;
+    height: 25px;
+}
+
+.heart2::before, .heart4::before, .heart6::before, .heart8::before {
+    top: -12.5px;
+}
+
+.heart2::after, .heart4::after, .heart6::after, .heart8::after {
+    left: 12.5px;
+}
+
+/* Animated Hearts */
+
+.heart {
+
+    position: absolute;
+
+    width: 20px;
+
+    height: 20px;
+
+    background-color: red;
+
+    opacity: 0;
+
+    transform: rotate(-45deg);
+
+    animation: floatUp 6s infinite linear;
+
+}
+
+.heart::before,
+
+.heart::after {
+
+    content: '';
+
+    position: absolute;
+
+    width: 20px;
+
+    height: 20px;
+
+    background-color: red;
+
+    border-radius: 50%;
+
+}
+
+.heart::before {
+
+    top: -10px;
+
+    left: 0;
+
+}
+
+.heart::after {
+
+    top: 0;
+
+    left: 10px;
+
+}
+
+/* Position and delay hearts */
+
+body.love-revealed .heart1 { left: 10%; animation-delay: 0s; }
+
+body.love-revealed .heart2 { left: 30%; animation-delay: 1.5s; }
+
+body.love-revealed .heart3 { left: 50%; animation-delay: 3s; }
+
+body.love-revealed .heart4 { left: 70%; animation-delay: 4.5s; }
+
+body.love-revealed .heart5 { left: 90%; animation-delay: 5s; }
+
+@keyframes floatUp {
+
+    0% {
+
+        transform: translateY(100vh) rotate(-45deg) scale(0.5);
+
+        opacity: 1;
+
+    }
+
+    100% {
+
+        transform: translateY(-10vh) rotate(-45deg) scale(1.2);
+
+        opacity: 0;
+
+    }
+
+}
