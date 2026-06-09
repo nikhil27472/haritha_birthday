@@ -1,0 +1,221 @@
+<html lang="en"><head>
+  <meta charset="UTF-8">
+  
+
+    <link rel="apple-touch-icon" type="image/png" href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png">
+
+    <meta name="apple-mobile-web-app-title" content="CodePen">
+
+    <link rel="icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico">
+
+    <link rel="mask-icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/logo-pin-b4b4269c16397ad2f0f7a01bcdf513a1994f4c94b8af2f191c09eb0d601762b1.svg" color="#111">
+
+
+
+  
+    <script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-f07739098a39bd4e74ddd974652dac904146f33fdc1ecab356e8c809a05faccb.js"></script>
+
+
+  <title>Night Sky</title>
+
+    <link rel="canonical" href="https://codepen.io/Web_yuki1027/pen/WNrdzxp">
+  
+  <link rel="stylesheet" href="https://public.codepenassets.com/css/reset-2.0.min.css">
+
+  
+  
+<style>
+body {
+  overflow: hidden;
+}
+
+#webgl-canvas {
+  background: radial-gradient(
+    circle farthest-corner at center top,
+    #071021,
+    #19324a
+  );
+}
+</style>
+
+  <script>
+  window.console = window.console || function(t) {};
+</script>
+
+  
+  
+</head>
+
+<body translate="no">
+  <canvas id="webgl-canvas" width="1312" height="415" style="width: 1050px; height: 332px;"></canvas>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script id="rendered-js">
+class Stage {
+  constructor() {
+    this.renderParam = {
+      width: window.innerWidth,
+      height: window.innerHeight };
+
+
+    this.cameraParam = {
+      fov: 70,
+      lookAt: new THREE.Vector3(0, 0, 0) };
+
+
+    this.fogParam = {
+      color: 0x000000,
+      start: 50,
+      end: 2000 };
+
+
+    this.scene = null;
+    this.camera = null;
+    this.renderer = null;
+    this.geometry = null;
+    this.material = null;
+    this.mesh = null;
+    this.isInitialized = false;
+  }
+
+  init() {
+    this._setScene();
+    this._setRender();
+    this._setCamera();
+    this._setFog();
+
+    this.isInitialized = true;
+  }
+
+  _setScene() {
+    this.scene = new THREE.Scene();
+  }
+
+  _setRender() {
+    this.renderer = new THREE.WebGLRenderer({
+      canvas: document.getElementById("webgl-canvas"),
+      alpha: true });
+
+    this.renderer.setPixelRatio(window.devicePixelRatio);
+    this.renderer.setSize(this.renderParam.width, this.renderParam.height);
+  }
+
+  _setCamera() {
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+
+    if (!this.isInitialized) {
+      this.camera = new THREE.PerspectiveCamera(
+      this.cameraParam.fov,
+      this.renderParam.width / this.renderParam.height);
+
+
+      this.camera.lookAt(this.cameraParam.lookAt);
+    }
+
+    this.camera.aspect = windowWidth / windowHeight;
+    this.camera.updateProjectionMatrix();
+    this.renderer.setPixelRatio(window.devicePixelRatio);
+    this.renderer.setSize(windowWidth, windowHeight);
+  }
+
+  _setFog() {
+    this.scene.fog = new THREE.Fog(
+    this.fogParam.fov,
+    this.fogParam.start,
+    this.fogParam.end);
+
+  }
+
+  _render() {
+    let rot = 0;
+    const radian = rot * Math.PI / 180;
+
+    rot += 0.1;
+    this.camera.position.x = 1000 * Math.sin(radian);
+    this.camera.position.z = 1000 * Math.cos(radian);
+    this.renderer.render(this.scene, this.camera);
+  }
+
+  onResize() {
+    this._setCamera();
+  }
+
+  onRaf() {
+    this._render();
+  }}
+
+
+class Mesh {
+  constructor(stage) {
+    this.stage = stage;
+    this.mesh = null;
+  }
+
+  init() {
+    this._setMesh();
+  }
+
+  _setMesh() {
+    const vertices = [];
+    const SIZE = 3000;
+    const LENGTH = 3000;
+    const geometry = new THREE.BufferGeometry();
+    const material = new THREE.PointsMaterial({
+      color: 0xffffff });
+
+
+    for (let i = 0; i < LENGTH; i++) {
+      const x = SIZE * (Math.random() - 0.5);
+      const y = SIZE * (Math.random() - 0.5);
+      const z = SIZE * (Math.random() - 0.5);
+
+      vertices.push(x, y, z);
+    }
+
+    geometry.setAttribute(
+    "position",
+    new THREE.Float32BufferAttribute(vertices, 3));
+
+
+    this.mesh = new THREE.Points(geometry, material);
+    this.stage.scene.add(this.mesh);
+  }
+
+  _render() {
+    this.mesh.rotation.y += 0.001;
+  }
+
+  onRaf() {
+    this._render();
+  }}
+
+
+(() => {
+  const stage = new Stage();
+  const mesh = new Mesh(stage);
+
+  stage.init();
+  mesh.init();
+
+  window.addEventListener("resize", () => {
+    stage.onResize();
+  });
+
+  const _raf = () => {
+    window.requestAnimationFrame(() => {
+      stage.onRaf();
+      mesh.onRaf();
+
+      _raf();
+    });
+  };
+
+  _raf();
+})();
+  </script>
+
+  
+
+
+
+</body></html>

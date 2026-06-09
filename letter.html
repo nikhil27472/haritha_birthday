@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Letter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="love.css">
+</head>
+<body>
+    <script>
+        // Check if user came from birthday page
+        if (!sessionStorage.getItem('visitedBirthday')) {
+            // Redirect to index if accessed directly
+            window.location.href = 'index.html';
+        }
+    </script>
+
+    <div class="letter-image">
+        <div class="animated-mail">
+            <div class="back-fold"></div>
+            <div class="letter">
+                <div class="letter-border"></div>
+                <div class="letter-title"></div>
+                <div class="letter-context"></div>
+                <div class="letter-stamp">
+                    <div class="letter-stamp-inner"></div>
+                </div>
+            </div>
+            <div class="top-fold"></div>
+            <div class="body"></div>
+            <div class="left-fold"></div>
+        </div>
+        <div class="shadow"></div>
+    </div>
+
+    <!-- Overlay for the Love Letter -->
+    <div id="love-message-overlay">
+        <!-- Background Music -->
+        <audio id="background-music" src="song.mp3" preload="auto"></audio>
+        <!-- Background Music for letter sections -->
+        <audio id="bg-music-1" src="18pages-1.mp3" preload="auto" loop></audio>
+        <audio id="bg-music-2" src="18pages-2.mp3" preload="auto" loop></audio>
+        
+        <div class="love-message-content">
+            <div class="spiral-binding">
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+            </div>
+            <div class="letter-content">
+                <h1 id="typewriter-h1" data-text="ప్రియమైన హరిత🌟​"></h1>
+                <p id="typewriter-p" data-text="This is my first time writing🫣, im not sure how to start or where to start 🤔​.....
+Lets start from the April 4th. The Day I met you for the first time. "></p>
+                
+                <!-- Song Lyrics Section (timed with song) -->
+                <p id="song-lyrics" 
+                   data-lyrics='[
+                       {"time": 700, "text": "Chusi chudangane nachesave..."},
+                       {"time": 3500, "text": "adigi adgakunda vachhesave..."},
+                       {"time": 6200, "text": "naa manasuloki ho.. andangaa Dooki.."}
+                   ]'></p>
+                
+                <p id="typewriter-p2" data-text="
+ఆ రోజు పెళ్లి చూపుల్లో నిన్ను మొదటిసారి చూసినప్పుడే నా మనసులో ఏదో తెలియని అలజడి మొదలైంది. నువ్వు మాట్లాడిన విధానం, చిరునవ్వు... అన్నీ నాకు బాగా నచ్చింది🥰. That's When I desided, you are the one....
+ఈ 3 నెలల్లో, నీతో మాట్లాడినా ప్రతీ రోజూ... ప్రతి నిమిషం... ప్రతీ క్షణం ... నీ మీద ప్రేమ పెరుగుతూనే ఉంది🫶​. ప్రతి రోజు మనం మాట్లాడుకున్నప్పుడు, నీ ఆలోచనలు, నువ్వు చూపిన ప్రేమ, నీకు ఉన్న బాధ్యత నాకు ఎంతో నచ్చాయి ☺️.
+ఫ్యూచర్ లో నీకు ఎంత సంపాదించి పెడతానో చెప్పలేను గానీ నిన్ను సంతోషపెట్టడానికి ప్రతీ రోజూ, ప్రతి నిమిషం, ప్రతీ క్షణం ప్రయత్నిస్తూనే ఉంటాను.
+"></p>
+                <h3 id="typewriter-h3" data-text="I ❤️ You 3000! ✨"></h3>
+                <div class="signature" id="typewriter-signature" data-text="ఇట్లు, 
+                నీ నిఖిల్ 🫂​">❤️</div>
+            </div>
+        </div>
+        <!-- Floating Hearts -->
+        <div class="heart heart1"></div>
+        <div class="heart heart2"></div>
+        <div class="heart heart3"></div>
+        <div class="heart heart4"></div>
+        <div class="heart heart5"></div>
+        <div class="heart heart6"></div>
+        <div class="heart heart7"></div>
+        <div class="heart heart8"></div>
+    </div>
+
+    <script src="love.js"></script>
+</body>
+</html>
+    </html>
