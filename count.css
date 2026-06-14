@@ -367,3 +367,41 @@ li span {
         padding: 0 0.3rem;
     }
 }
+
+/* Reveal Surprise Button */
+.reveal-surprise-btn {
+    margin-top: 30px;
+    padding: 18px 45px;
+    font-size: 1.4em;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+    transition: all 0.3s ease;
+    animation: pulse-glow 2s ease-in-out infinite;
+    font-family: 'Poppins', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.reveal-surprise-btn:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+.reveal-surprise-btn:active {
+    transform: translateY(-2px) scale(1.02);
+}
+
+@keyframes pulse-glow {
+    0%, 100% {
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+    }
+    50% {
+        box-shadow: 0 10px 50px rgba(102, 126, 234, 0.8), 0 0 30px rgba(118, 75, 162, 0.6);
+    }
+}
