@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -48,9 +48,9 @@
             </ul>
         </div>
         <div id="content" class="emoji">
-            <button id="reveal-btn" class="reveal-surprise-btn" onclick="window.location.href='birthday.html'">
-                🎁 Reveal Surprise 🎁
-            </button>
+            <span>🎉</span>
+            <span>🎂</span>
+            <span>🎈</span>
         </div>
     </div>
 
@@ -90,7 +90,7 @@
                 mm = String(today.getMonth() + 1).padStart(2, "0"),
                 yyyy = today.getFullYear(),
                 nextYear = yyyy + 1,
-                dayMonth = "06/14/",
+                dayMonth = "06/09/",
                 //dayMonth = dd+"/"+mm+"/",
                 birthday = dayMonth + yyyy;
             
@@ -111,16 +111,21 @@
                     
                     // When countdown reaches zero
                     if (distance < 0) {
-                        document.getElementById("headline").innerText = "🎉 Happy Birthday Cutiee..! 🎉";
+                        document.getElementById("headline").innerText = "🎉 It's Birthday Time! 🎉";
                         document.getElementById("countdown").style.display = "none";
                         document.getElementById("content").style.display = "block";
                         clearInterval(x);
                         
-                        // Ensure audio is activated
+                        // Ensure audio is activated before redirecting
                         activateAudioContext();
                         
-                        // Don't auto-redirect anymore, let user click the button
+                        // Redirect to birthday page after 2 seconds
+                        setTimeout(function() {
+                            window.location.href = "birthday.html";
+                        }, 2000);
                     }
                 }, 1000);
-     
+        }());
+    </script>
+</body>
 </html>
