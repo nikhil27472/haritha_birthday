@@ -48,9 +48,9 @@
             </ul>
         </div>
         <div id="content" class="emoji">
-            <span>🎉</span>
-            <span>🎂</span>
-            <span>🎈</span>
+            <button id="reveal-btn" class="reveal-surprise-btn" onclick="window.location.href='birthday.html'">
+                🎁 Reveal Surprise 🎁
+            </button>
         </div>
     </div>
 
@@ -111,21 +111,16 @@
                     
                     // When countdown reaches zero
                     if (distance < 0) {
-                        document.getElementById("headline").innerText = "🎉 It's Birthday Time! 🎉";
+                        document.getElementById("headline").innerText = "🎉 Happy Birthday Cutiee..! 🎉";
                         document.getElementById("countdown").style.display = "none";
                         document.getElementById("content").style.display = "block";
                         clearInterval(x);
                         
-                        // Ensure audio is activated before redirecting
+                        // Ensure audio is activated
                         activateAudioContext();
                         
-                        // Redirect to birthday page after 2 seconds
-                        setTimeout(function() {
-                            window.location.href = "birthday.html";
-                        }, 2000);
+                        // Don't auto-redirect anymore, let user click the button
                     }
                 }, 1000);
-        }());
-    </script>
-</body>
+     
 </html>

@@ -526,7 +526,7 @@ body.love-revealed #love-message-overlay {
 /* Responsive design */
 @media (max-width: 768px) {
     .love-message-content {
-        width: 95%;
+        width: 85%;
         min-height: auto;
         max-height: 90vh;
     }
