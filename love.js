@@ -1,10 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
     const letterImage = document.querySelector('.letter-image');
     const body = document.body;
-    const audio = document.getElementById('background-music'); // Song for lyrics
-    const bgMusic1 = document.getElementById('bg-music-1'); // Background for typewriter-p
-    const bgMusic2 = document.getElementById('bg-music-2'); // Background for p2, h3, signature
+    const bgMusic = document.getElementById('bg-music'); // Single background music
     let clickCount = 0;
+
+    console.log('Script loaded');
+    console.log('letterImage:', letterImage);
+    console.log('bgMusic:', bgMusic);
 
     // Typewriter effect function
     function typeWriter(element, text, speed, callback) {
@@ -18,6 +20,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const currentChar = text.charAt(i);
                 element.textContent += currentChar;
                 i++;
+                
+                // Auto-scroll to keep the typing in view
+                element.scrollIntoView({ behavior: 'smooth', block: 'end' });
                 
                 // Check if current character is a newline
                 if (currentChar === '\n') {
@@ -46,147 +51,59 @@ document.addEventListener('DOMContentLoaded', () => {
         type();
     }
 
-    // Function to display lyrics with precise timing (adds lines one by one)
-    function displayLyrics(lyricsElement, lyricsData) {
-        return new Promise((resolve) => {
-            lyricsElement.style.opacity = '1';
-            lyricsElement.textContent = ''; // Clear any existing content
-            let timeouts = [];
 
-            // Stop background music 1 before playing the song
-            if (bgMusic1) {
-                bgMusic1.pause();
-                bgMusic1.currentTime = 0;
-            }
 
-            // Start playing the song
-            if (audio) {
-                audio.play().catch(err => console.log('Audio play failed:', err));
-            }
 
-            // Schedule each lyric based on its time
-            lyricsData.forEach((lyric, index) => {
-                // Show lyric at specified time
-                const showTimeout = setTimeout(() => {
-                    // Add the lyric as a new line
-                    if (index > 0) {
-                        lyricsElement.textContent += '\n';
-                    }
-                    lyricsElement.textContent += lyric.text;
-                }, lyric.time);
-                timeouts.push(showTimeout);
-
-                // If it's the last lyric, schedule the end
-                if (index === lyricsData.length - 1) {
-                    const endTimeout = setTimeout(() => {
-                        // Stop the music but keep lyrics visible
-                        if (audio) {
-                            audio.pause();
-                            audio.currentTime = 0;
-                        }
-                        
-                        resolve();
-                    }, 12700); // 12.7 seconds total song duration
-                    timeouts.push(endTimeout);
-                }
-            });
-        });
-    }
 
 
 
     // Function to start typewriter effect sequence
     function startTypewriterSequence() {
         const h1Element = document.getElementById('typewriter-h1');
-        const pElement = document.getElementById('typewriter-p');
-        const lyricsElement = document.getElementById('song-lyrics');
         const p2Element = document.getElementById('typewriter-p2');
         const h3Element = document.getElementById('typewriter-h3');
         const signatureElement = document.getElementById('typewriter-signature');
         
-        if (h1Element && pElement && h3Element && signatureElement) {
+        if (h1Element && p2Element && h3Element && signatureElement) {
             const h1Text = h1Element.getAttribute('data-text');
-            const pText = pElement.getAttribute('data-text');
+            const p2Text = p2Element.getAttribute('data-text');
             const h3Text = h3Element.getAttribute('data-text');
             const signatureText = signatureElement.getAttribute('data-text');
             
-            // Get lyrics data if available
-            let lyricsData = [];
-            if (lyricsElement) {
-                try {
-                    lyricsData = JSON.parse(lyricsElement.getAttribute('data-lyrics') || '[]');
-                } catch (e) {
-                    console.log('No lyrics data found');
-                }
-            }
-            
-            const p2Text = p2Element ? p2Element.getAttribute('data-text') : '';
-            
             // Hide all elements initially
             h1Element.style.opacity = '0';
-            pElement.style.opacity = '0';
-            if (lyricsElement) lyricsElement.style.opacity = '0';
-            if (p2Element) p2Element.style.opacity = '0';
+            p2Element.style.opacity = '0';
             h3Element.style.opacity = '0';
             signatureElement.style.opacity = '0';
             
-            // Sequence: h1 → p → lyrics (with song) → p2 → h3 → signature
+            // Sequence: h1 → p2 → h3 → signature (with single background music throughout)
             // Start with h1 element (120ms per character)
             typeWriter(h1Element, h1Text, 120, () => {
-                // After h1 is complete, start p (70ms per character)
-                // Start background music 1 for typewriter-p
-                if (bgMusic1) {
-                    bgMusic1.volume = 0.3;
-                    bgMusic1.play().catch(err => console.log('BG Music 1 play failed:', err));
+                // After h1 is complete, start background music
+                if (bgMusic) {
+                    bgMusic.volume = 0.3;
+                    bgMusic.play().catch(err => console.log('BG Music play failed:', err));
                 }
                 
-                typeWriter(pElement, pText, 70, () => {
-                    // After p is complete, show lyrics with song
-                    if (lyricsData.length > 0 && lyricsElement) {
-                        displayLyrics(lyricsElement, lyricsData).then(() => {
-                            // After lyrics/song complete, continue with p2
-                            continueAfterSong();
-                        });
-                    } else {
-                        // No lyrics, continue directly
-                        continueAfterSong();
-                    }
-                });
-            });
-
-            function continueAfterSong() {
-                // Start background music 2 for p2, h3, signature
-                if (bgMusic2) {
-                    bgMusic2.volume = 0.3;
-                    bgMusic2.play().catch(err => console.log('BG Music 2 play failed:', err));
-                }
-                
-                // Type p2 if it exists
-                if (p2Element && p2Text) {
-                    typeWriter(p2Element, p2Text, 70, () => {
-                        // After p2, start h3 (100ms per character)
-                        typeWriter(h3Element, h3Text, 100, () => {
-                            // After h3 is complete, start signature (80ms per character)
-                            typeWriter(signatureElement, signatureText, 80, () => {
-                                // Keep pulse animation on h3
-                                h3Element.style.animation = 'pulse 1.5s infinite ease-in-out';
-                            });
-                        });
-                    });
-                } else {
-                    // No p2, go straight to h3
+                // Start p2 (70ms per character)
+                typeWriter(p2Element, p2Text, 70, () => {
+                    // After p2, start h3 (100ms per character)
                     typeWriter(h3Element, h3Text, 100, () => {
+                        // After h3 is complete, start signature (80ms per character)
                         typeWriter(signatureElement, signatureText, 80, () => {
+                            // Keep pulse animation on h3
                             h3Element.style.animation = 'pulse 1.5s infinite ease-in-out';
                         });
                     });
-                }
-            }
+                });
+            });
         }
     }
 
     if (letterImage) {
+        console.log('Adding click listener to letter');
         letterImage.addEventListener('click', () => {
+            console.log('Letter clicked! clickCount:', clickCount);
             if (clickCount === 0) {
                 // First click: Open the envelope
                 letterImage.classList.add('opened');

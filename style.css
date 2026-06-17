@@ -73,7 +73,7 @@ body {
 }
 .left .btn{
     transform: scale(0);
-    animation: scaleCricle 2s 16s forwards ease-in-out;
+    animation: scaleCricle 2s 14s forwards ease-in-out;
 }
 #btn__letter{
     position: relative;
@@ -229,6 +229,16 @@ body {
     bottom: -20px;
     border: 3px solid var(--color-black);
     font-family: 'Dancing Script', cursive;
+    clip-path: inset(0 100% 0 0);
+    animation: linearReveal 1.5s 7s forwards ease-in-out;
+}
+@keyframes linearReveal{
+    0%{
+        clip-path: inset(0 100% 0 0);
+    }
+    100%{
+        clip-path: inset(0 0% 0 0);
+    }
 }
 .date__of__birth span, .name span{
     font-weight: bold;
@@ -242,13 +252,6 @@ body {
 }
 .right .box__account{
     position: relative;
-    transform: translateY(1400px);
-    animation: topBoxImage 8s 7s forwards ease-in;
-}
-@keyframes topBoxImage{
-    to{
-        transform: translateY(0);
-    }
 }
 .content .right .image{
     position: relative;
@@ -259,6 +262,16 @@ body {
     display: flex;
     align-items: center;
     border: 6px solid var(--color-black);
+    clip-path: circle(0% at 50% 50%);
+    animation: circularReveal 2s 7s forwards ease-out;
+}
+@keyframes circularReveal{
+    0%{
+        clip-path: circle(0% at 50% 50%);
+    }
+    100%{
+        clip-path: circle(50% at 50% 50%);
+    }
 }
 .content .right .image img{
     width: 100%;
@@ -273,7 +286,7 @@ body {
     justify-content: center;
     align-items: center;
     transform: scale(0);
-    animation: scaleCricle 3s 15s forwards ease-in-out;
+    animation: scaleCricle 3s 13s forwards ease-in-out;
 }
 @keyframes scaleCricle {
     0%{
@@ -334,7 +347,21 @@ body {
     position: absolute;
     top: -70px;
     left: -70px;
-    animation: balloon1 2s infinite linear;
+    opacity: 0;
+    animation: floatUp 2s 10.5s forwards ease-out, balloon1 2s 12.5s infinite linear;
+}
+@keyframes floatUp{
+    0%{
+        opacity: 0;
+        transform: translateY(500px);
+    }
+    50%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 1;
+        transform: translateY(0px);
+    }
 }
 @keyframes balloon1{
     0%, 50%,100%{
@@ -355,8 +382,21 @@ body {
     top: 170px;
     right: -65px;
     z-index: -1;
-    transform: rotate(10deg);
-    animation: balloon2 2s infinite linear;
+    opacity: 0;
+    animation: floatUp2 2s 11s forwards ease-out, balloon2 2s 13s infinite linear;
+}
+@keyframes floatUp2{
+    0%{
+        opacity: 0;
+        transform: translateY(500px) rotate(10deg);
+    }
+    50%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 1;
+        transform: translateY(0px) rotate(10deg);
+    }
 }
 @keyframes balloon2 {
     0%,50%,100%{
@@ -379,7 +419,7 @@ body {
     background-color: var(--color-black);
     clip-path: polygon(0 50%, 35% 35%, 50% 0, 65% 35%, 100% 50%, 65% 65%, 50% 100%, 35% 65%);
     animation: scaleCricle 3s var(--t) forwards, 
-            scaleStar 2s 16s infinite ease-in-out;
+            scaleStar 2s 14s infinite ease-in-out;
 }
 .decorate_star.star1{
     width: 20px;
@@ -450,7 +490,7 @@ body {
     bottom: 180px;
     left: 600px;
     transform: scale(0);
-    animation: scaleCricle 3s 15s forwards ease-in-out;
+    animation: scaleCricle 3s 13s forwards ease-in-out;
 }
 
 
@@ -720,6 +760,15 @@ body {
         width: 300px;
         height: 300px;
     }
+    
+    @keyframes circularReveal{
+        0%{
+            clip-path: circle(0% at 50% 50%);
+        }
+        100%{
+            clip-path: circle(50% at 50% 50%);
+        }
+    }
 
     .name span {
         font-size: 1.5rem;
@@ -743,6 +792,20 @@ body {
     .right .balloon_one img {
         width: 80px !important;
     }
+    
+    @keyframes floatUp{
+        0%{
+            opacity: 0;
+            transform: translateY(400px);
+        }
+        50%{
+            opacity: 1;
+        }
+        100%{
+            opacity: 1;
+            transform: translateY(0px);
+        }
+    }
 
     .right .balloon_two {
         top: 150px;
@@ -751,6 +814,20 @@ body {
 
     .right .balloon_two img {
         width: 80px !important;
+    }
+    
+    @keyframes floatUp2{
+        0%{
+            opacity: 0;
+            transform: translateY(400px) rotate(10deg);
+        }
+        50%{
+            opacity: 1;
+        }
+        100%{
+            opacity: 1;
+            transform: translateY(0px) rotate(10deg);
+        }
     }
 
     /* Decorative elements repositioning for tablet */
@@ -798,7 +875,7 @@ body {
         bottom: 120px;
         left: 50%;
         transform: translateX(-50%) scale(0);
-        animation: scaleCricle 3s 15s forwards ease-in-out;
+        animation: scaleCricle 3s 13s forwards ease-in-out;
     }
 
     .decorate_bottom {
@@ -959,6 +1036,15 @@ body {
         align-items: center;
         border: 5px solid var(--color-black);
     }
+    
+    @keyframes circularReveal{
+        0%{
+            clip-path: circle(0% at 50% 50%);
+        }
+        100%{
+            clip-path: circle(50% at 50% 50%);
+        }
+    }
 
     .name {
         position: absolute;
@@ -980,7 +1066,7 @@ body {
         justify-content: center;
         align-items: center;
         transform: scale(0);
-        animation: scaleCricle 3s 15s forwards ease-in-out;
+        animation: scaleCricle 3s 13s forwards ease-in-out;
     }
 
     .text__cricle {
@@ -1003,6 +1089,20 @@ body {
     .right .balloon_one img {
         width: 70px !important;
     }
+    
+    @keyframes floatUp{
+        0%{
+            opacity: 0;
+            transform: translateY(350px);
+        }
+        50%{
+            opacity: 1;
+        }
+        100%{
+            opacity: 1;
+            transform: translateY(0px);
+        }
+    }
 
     .right .balloon_two {
         top: 120px;
@@ -1011,6 +1111,20 @@ body {
 
     .right .balloon_two img {
         width: 70px !important;
+    }
+    
+    @keyframes floatUp2{
+        0%{
+            opacity: 0;
+            transform: translateY(350px) rotate(10deg);
+        }
+        50%{
+            opacity: 1;
+        }
+        100%{
+            opacity: 1;
+            transform: translateY(0px) rotate(10deg);
+        }
     }
 
     /* Decorative elements for mobile */
@@ -1080,7 +1194,7 @@ body {
         bottom: 100px;
         left: 50%;
         transform: translateX(-50%) scale(0);
-        animation: scaleCricle 3s 15s forwards ease-in-out;
+        animation: scaleCricle 3s 13s forwards ease-in-out;
     }
 
     .smiley__icon img {
@@ -1115,6 +1229,15 @@ body {
     .content .right .image {
         width: 180px;
         height: 180px;
+    }
+    
+    @keyframes circularReveal{
+        0%{
+            clip-path: circle(0% at 50% 50%);
+        }
+        100%{
+            clip-path: circle(50% at 50% 50%);
+        }
     }
 
     .name span {

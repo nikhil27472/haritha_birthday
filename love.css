@@ -421,6 +421,7 @@ body.love-revealed #love-message-overlay {
     font-family: 'Noto Sans Telugu', 'Poppins', Arial, sans-serif;
     overflow-y: auto;
     max-height: 80vh;
+    scroll-behavior: smooth;
 }
 
 .letter-content h1 {
@@ -475,23 +476,6 @@ body.love-revealed #love-message-overlay {
     white-space: pre-line;
 }
 
-/* Song Lyrics Paragraph */
-#song-lyrics {
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(135deg, rgba(255, 182, 193, 0.3), rgba(255, 240, 245, 0.3));
-    border-left: 4px solid #ff69b4;
-    border-radius: 10px;
-    font-size: 1.3em;
-    font-style: italic;
-    color: #d63384;
-    text-align: center;
-    opacity: 0;
-    white-space: pre-line;
-    line-height: 1.8;
-    box-shadow: 0 2px 10px rgba(255, 105, 180, 0.2);
-}
-
 @keyframes popIn {
 
     to {
@@ -506,7 +490,7 @@ body.love-revealed #love-message-overlay {
 
 /* Typewriter cursor effect */
 #typewriter-h1.typing::after,
-#typewriter-p.typing::after,
+#typewriter-p2.typing::after,
 #typewriter-h3.typing::after,
 #typewriter-signature.typing::after {
     content: '|';
