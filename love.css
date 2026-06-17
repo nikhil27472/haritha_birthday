@@ -337,6 +337,7 @@ body.love-revealed .letter-image {
     transition: opacity 1s ease-in-out 0.3s, visibility 1s step-end 0.3s;
 
     overflow-y: auto;
+    padding-left: 5px;
 
 }
 
